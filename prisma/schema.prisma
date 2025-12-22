@@ -1,0 +1,135 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Types de séances photo disponibles
+model SessionType {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  description String
+  duration    Int       // durée en minutes
+  price       Float
+  isActive    Boolean   @default(true)
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  bookings    Booking[]
+}
+
+// Disponibilités hebdomadaires récurrentes
+model WeeklyAvailability {
+  id        String   @id @default(cuid())
+  dayOfWeek Int      // 0 = Dimanche, 1 = Lundi, ..., 6 = Samedi
+  startTime String   // Format "HH:mm" (ex: "09:00")
+  endTime   String   // Format "HH:mm" (ex: "18:00")
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([dayOfWeek, startTime, endTime])
+}
+
+// Dates bloquées (vacances, jours fériés, etc.)
+model BlockedDate {
+  id        String   @id @default(cuid())
+  date      DateTime // Date complète bloquée
+  reason    String?  // Raison optionnelle
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([date])
+}
+
+// Réservations
+model Booking {
+  id            String      @id @default(cuid())
+  sessionTypeId String
+  sessionType   SessionType @relation(fields: [sessionTypeId], references: [id])
+  
+  // Date et heure
+  date          DateTime    // Date de la séance
+  startTime     String      // Heure de début (format "HH:mm")
+  endTime       String      // Heure de fin (format "HH:mm")
+  
+  // Informations client
+  clientName    String
+  clientEmail   String
+  clientPhone   String?
+  message       String?
+  
+  // Statut avec workflow complet
+  status        String      @default("PENDING")
+  // Valeurs possibles: PENDING, CONFIRMED, CONTACTED, PAID, COMPLETED, CANCELLED
+  
+  // Notes internes admin
+  internalNotes String?
+  
+  // Timestamps
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  @@index([date, startTime])
+  @@index([clientEmail])
+  @@index([status])
+}
+
+// Images du site (gestion via admin)
+model SiteImage {
+  id          String   @id @default(cuid())
+  key         String   @unique // Clé unique pour identifier l'image (ex: "hero-home", "about-melody")
+  filename    String   // Nom du fichier
+  url         String   // URL de l'image
+  altText     String   // Texte alternatif pour SEO
+  category    String   // Catégorie: "hero", "portfolio", "about", etc.
+  description String?  // Description optionnelle
+  isActive    Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([category])
+  @@index([isActive])
+}
+
+// Emails envoyés depuis l'admin
+model EmailLog {
+  id          String   @id @default(cuid())
+  recipient   String   // Email du destinataire
+  subject     String   // Sujet
+  content     String   // Contenu de l'email
+  sentAt      DateTime @default(now())
+  sentBy      String   @default("admin") // Qui a envoyé
+  bookingId   String?  // Lien optionnel vers une réservation
+  status      String   @default("sent") // sent, failed
+  
+  @@index([recipient])
+  @@index([sentAt])
+}
+
+// Images des galeries du portfolio
+model GalleryImage {
+  id          String   @id @default(cuid())
+  gallery     String   // Galerie: "portraits", "noir-et-blanc", "lifestyle"
+  filename    String   // Nom du fichier
+  url         String   // URL de l'image
+  altText     String   // Texte alternatif pour SEO
+  description String?  // Description optionnelle
+  isActive    Boolean  @default(true)
+  order       Int      @default(0) // Ordre d'affichage
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([gallery])
+  @@index([isActive])
+  @@index([order])
+}
+
