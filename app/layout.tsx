@@ -16,8 +16,18 @@ const playfair = Playfair_Display({
   display: 'swap',
 })
 
+// Fonction helper pour normaliser l'URL avec protocole
+function getBaseUrl(): string {
+  const url = process.env.APP_URL || 'http://localhost:3000'
+  // Si l'URL n'a pas de protocole, ajouter https://
+  if (url && !url.match(/^https?:\/\//)) {
+    return `https://${url}`
+  }
+  return url
+}
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.APP_URL || 'http://localhost:3000'),
+  metadataBase: new URL(getBaseUrl()),
   title: {
     default: 'Melody Floc\'h | Photographe Portrait & Lifestyle',
     template: '%s | Melody Floc\'h',
@@ -38,7 +48,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
-    url: process.env.APP_URL,
+    url: getBaseUrl(),
     siteName: 'Melody Floc\'h Photography',
     title: 'Melody Floc\'h | Photographe Portrait & Lifestyle',
     description: 'Melody Floc\'h, photographe spécialisée en portraits artistiques, noir & blanc et photographie lifestyle.',
