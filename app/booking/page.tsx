@@ -21,10 +21,11 @@ export default async function BookingPage() {
   // Récupérer les types de séances actifs
   let sessionTypes: SessionType[] = []
   try {
-    sessionTypes = await prisma.sessionType.findMany({
+    const result = await prisma.sessionType.findMany({
       where: { isActive: true },
       orderBy: { order: 'asc' },
     })
+    sessionTypes = result
   } catch (error: any) {
     // Si la table n'existe pas, retourner un tableau vide
     // Les migrations devraient créer la table au prochain démarrage
