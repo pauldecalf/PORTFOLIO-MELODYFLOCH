@@ -138,7 +138,7 @@ export default function AdminImages({ images: initialImages }: AdminImagesProps)
 
           <div>
             <label className="block text-sm font-medium mb-2">
-              Fichier image (JPG, PNG, WebP - max 5MB)
+              Fichier image (JPG, PNG, WebP - max 20MB, qualité préservée)
             </label>
             <input
               type="file"
@@ -218,6 +218,8 @@ export default function AdminImages({ images: initialImages }: AdminImagesProps)
                     alt={image.altText}
                     fill
                     className="object-cover rounded"
+                    quality={100}
+                    unoptimized={true}
                   />
                 </div>
 
@@ -308,6 +310,8 @@ export default function AdminImages({ images: initialImages }: AdminImagesProps)
                 fill
                 className="object-contain"
                 sizes="90vw"
+                quality={100}
+                unoptimized={true}
               />
               <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-4">
                 <div className="container-custom">

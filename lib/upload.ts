@@ -1,7 +1,6 @@
 import fs from 'fs/promises'
 import path from 'path'
 import { randomUUID } from 'crypto'
-import sharp from 'sharp'
 
 const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads')
 
@@ -14,7 +13,7 @@ export async function ensureUploadDir() {
   }
 }
 
-// Sauvegarder une image uploadée
+// Sauvegarder une image uploadée (sans compression pour préserver la qualité)
 export async function saveUploadedImage(
   file: File,
   category: string = 'general'
@@ -29,14 +28,8 @@ export async function saveUploadedImage(
   const filename = `${category}-${randomUUID()}${ext}`
   const filepath = path.join(UPLOAD_DIR, filename)
 
-  // Optimiser l'image avec Sharp
-  await sharp(buffer)
-    .resize(2000, 2000, {
-      fit: 'inside',
-      withoutEnlargement: true,
-    })
-    .jpeg({ quality: 85 })
-    .toFile(filepath)
+  // Sauvegarder l'image dans son format d'origine sans compression ni redimensionnement
+  await fs.writeFile(filepath, buffer)
 
   return {
     filename,
@@ -60,8 +53,8 @@ export function isValidImage(file: File): boolean {
   return validTypes.includes(file.type)
 }
 
-// Valider la taille du fichier (max 5MB)
-export function isValidFileSize(file: File, maxSizeMB: number = 5): boolean {
+// Valider la taille du fichier (max 20MB par défaut pour préserver la qualité)
+export function isValidFileSize(file: File, maxSizeMB: number = 20): boolean {
   const maxSize = maxSizeMB * 1024 * 1024
   return file.size <= maxSize
 }

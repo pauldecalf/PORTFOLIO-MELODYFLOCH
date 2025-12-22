@@ -264,38 +264,38 @@ export default function AdminDashboard({
         {/* Navigation */}
         <Card className="overflow-hidden">
           <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-            <TabsList className="bg-gray-50 w-full justify-start border-b border-gray-200 rounded-none p-0 h-auto">
+            <TabsList className="bg-gray-50 w-full flex-col md:flex-row border-b border-gray-200 rounded-none p-0 h-auto">
               <TabsTrigger 
                 value="bookings" 
-                className="rounded-none py-4 px-6 data-[state=active]:bg-white data-[state=active]:border-b-2 data-[state=active]:border-primary-600 data-[state=active]:text-primary-600 data-[state=active]:shadow-sm font-medium"
+                className="w-full md:w-auto rounded-none py-3 md:py-4 px-4 md:px-6 data-[state=active]:bg-white data-[state=active]:border-l-4 md:data-[state=active]:border-l-0 data-[state=active]:border-b-0 md:data-[state=active]:border-b-2 data-[state=active]:border-primary-600 data-[state=active]:text-primary-600 data-[state=active]:shadow-sm font-medium justify-start md:justify-center"
               >
                 <span className="mr-2">📅</span>
                 Réservations
               </TabsTrigger>
               <TabsTrigger 
                 value="images" 
-                className="rounded-none py-4 px-6 data-[state=active]:bg-white data-[state=active]:border-b-2 data-[state=active]:border-primary-600 data-[state=active]:text-primary-600 data-[state=active]:shadow-sm font-medium"
+                className="w-full md:w-auto rounded-none py-3 md:py-4 px-4 md:px-6 data-[state=active]:bg-white data-[state=active]:border-l-4 md:data-[state=active]:border-l-0 data-[state=active]:border-b-0 md:data-[state=active]:border-b-2 data-[state=active]:border-primary-600 data-[state=active]:text-primary-600 data-[state=active]:shadow-sm font-medium justify-start md:justify-center"
               >
                 <span className="mr-2">🖼️</span>
                 Images
               </TabsTrigger>
               <TabsTrigger 
                 value="emails" 
-                className="rounded-none py-4 px-6 data-[state=active]:bg-white data-[state=active]:border-b-2 data-[state=active]:border-primary-600 data-[state=active]:text-primary-600 data-[state=active]:shadow-sm font-medium"
+                className="w-full md:w-auto rounded-none py-3 md:py-4 px-4 md:px-6 data-[state=active]:bg-white data-[state=active]:border-l-4 md:data-[state=active]:border-l-0 data-[state=active]:border-b-0 md:data-[state=active]:border-b-2 data-[state=active]:border-primary-600 data-[state=active]:text-primary-600 data-[state=active]:shadow-sm font-medium justify-start md:justify-center"
               >
                 <span className="mr-2">✉️</span>
                 Emails
               </TabsTrigger>
               <TabsTrigger 
                 value="galleries" 
-                className="rounded-none py-4 px-6 data-[state=active]:bg-white data-[state=active]:border-b-2 data-[state=active]:border-primary-600 data-[state=active]:text-primary-600 data-[state=active]:shadow-sm font-medium"
+                className="w-full md:w-auto rounded-none py-3 md:py-4 px-4 md:px-6 data-[state=active]:bg-white data-[state=active]:border-l-4 md:data-[state=active]:border-l-0 data-[state=active]:border-b-0 md:data-[state=active]:border-b-2 data-[state=active]:border-primary-600 data-[state=active]:text-primary-600 data-[state=active]:shadow-sm font-medium justify-start md:justify-center"
               >
                 <span className="mr-2">📸</span>
                 Galeries
               </TabsTrigger>
               <TabsTrigger 
                 value="blocked" 
-                className="rounded-none py-4 px-6 data-[state=active]:bg-white data-[state=active]:border-b-2 data-[state=active]:border-primary-600 data-[state=active]:text-primary-600 data-[state=active]:shadow-sm font-medium"
+                className="w-full md:w-auto rounded-none py-3 md:py-4 px-4 md:px-6 data-[state=active]:bg-white data-[state=active]:border-l-4 md:data-[state=active]:border-l-0 data-[state=active]:border-b-0 md:data-[state=active]:border-b-2 data-[state=active]:border-primary-600 data-[state=active]:text-primary-600 data-[state=active]:shadow-sm font-medium justify-start md:justify-center"
               >
                 <span className="mr-2">🚫</span>
                 Disponibilités
@@ -469,24 +469,40 @@ export default function AdminDashboard({
                 {/* Ajouter une date bloquée */}
                 <div>
                   <h2 className="text-xl font-serif font-semibold mb-4">Ajouter une date bloquée</h2>
-                  <form onSubmit={handleAddBlockedDate} className="flex gap-4">
-                    <input
-                      type="date"
-                      value={newBlockedDate}
-                      onChange={(e) => setNewBlockedDate(e.target.value)}
-                      className="input-field flex-1"
-                      required
-                    />
-                    <input
-                      type="text"
-                      value={newBlockedReason}
-                      onChange={(e) => setNewBlockedReason(e.target.value)}
-                      placeholder="Raison (optionnel)"
-                      className="input-field flex-1"
-                    />
-                    <button type="submit" className="btn-primary whitespace-nowrap">
-                      Ajouter
-                    </button>
+                  <form onSubmit={handleAddBlockedDate} className="space-y-4">
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <div className="flex-1">
+                        <Label htmlFor="blocked-date" className="block text-sm font-medium mb-2">
+                          Date *
+                        </Label>
+                        <input
+                          id="blocked-date"
+                          type="date"
+                          value={newBlockedDate}
+                          onChange={(e) => setNewBlockedDate(e.target.value)}
+                          className="input-field w-full"
+                          required
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <Label htmlFor="blocked-reason" className="block text-sm font-medium mb-2">
+                          Raison (optionnelle)
+                        </Label>
+                        <input
+                          id="blocked-reason"
+                          type="text"
+                          value={newBlockedReason}
+                          onChange={(e) => setNewBlockedReason(e.target.value)}
+                          placeholder="Ex: Vacances, Maintenance..."
+                          className="input-field w-full"
+                        />
+                      </div>
+                      <div className="flex items-end">
+                        <button type="submit" className="btn-primary whitespace-nowrap w-full sm:w-auto">
+                          Ajouter
+                        </button>
+                      </div>
+                    </div>
                   </form>
                 </div>
 

@@ -146,8 +146,8 @@ export async function uploadSiteImage(formData: FormData) {
       return { success: false, error: 'Format d\'image invalide. Utilisez JPG, PNG ou WebP' }
     }
 
-    if (!isValidFileSize(file, 5)) {
-      return { success: false, error: 'L\'image ne doit pas dépasser 5 MB' }
+    if (!isValidFileSize(file, 20)) {
+      return { success: false, error: 'L\'image ne doit pas dépasser 20 MB' }
     }
 
     // Supprimer l'ancienne image si elle existe
@@ -257,7 +257,7 @@ export async function sendAdminEmail(formData: FormData) {
 
     // Envoyer l'email
     const result = await resend.emails.send({
-      from: `Melody Floc'h <${process.env.ADMIN_EMAIL}>`,
+      from: 'onboarding@resend.dev',
       to: recipient,
       subject,
       html: `
@@ -377,8 +377,8 @@ export async function uploadGalleryImage(formData: FormData) {
       return { success: false, error: 'Format d\'image non supporté. Utilisez JPG, PNG, WebP ou GIF.' }
     }
 
-    if (!isValidFileSize(file)) {
-      return { success: false, error: 'Fichier trop volumineux (max 10 MB)' }
+    if (!isValidFileSize(file, 20)) {
+      return { success: false, error: 'Fichier trop volumineux (max 20 MB)' }
     }
 
     // Sauvegarder l'image
@@ -400,6 +400,97 @@ export async function uploadGalleryImage(formData: FormData) {
   } catch (error) {
     console.error('Erreur upload image galerie:', error)
     return { success: false, error: 'Erreur lors de l\'upload de l\'image' }
+  }
+}
+
+export async function uploadMultipleGalleryImages(formData: FormData) {
+  try {
+    const gallery = formData.get('gallery') as string
+    const imagesDataJson = formData.get('imagesData') as string
+    
+    if (!gallery || !imagesDataJson) {
+      return { success: false, error: 'Données manquantes' }
+    }
+
+    const imagesData = JSON.parse(imagesDataJson) as Array<{
+      fileName: string
+      altText: string
+      description?: string
+      order: number
+      fileIndex: number
+    }>
+
+    if (imagesData.length === 0) {
+      return { success: false, error: 'Aucune image à uploader' }
+    }
+
+    // Valider la galerie
+    const validGalleries = ['portraits', 'noir-et-blanc', 'lifestyle']
+    if (!validGalleries.includes(gallery)) {
+      return { success: false, error: 'Galerie invalide' }
+    }
+
+    const results = []
+    const errors = []
+
+    for (const imageData of imagesData) {
+      const file = formData.get(`file_${imageData.fileIndex}`) as File
+      
+      if (!file) {
+        errors.push(`${imageData.fileName}: Fichier manquant`)
+        continue
+      }
+
+      try {
+        // Valider l'image
+        if (!isValidImage(file)) {
+          errors.push(`${imageData.fileName}: Format non supporté`)
+          continue
+        }
+
+        if (!isValidFileSize(file, 20)) {
+          errors.push(`${imageData.fileName}: Fichier trop volumineux (max 20 MB)`)
+          continue
+        }
+
+        // Sauvegarder l'image
+        const { filename, url } = await saveUploadedImage(file, 'gallery')
+
+        // Créer l'entrée en DB
+        await prisma.galleryImage.create({
+          data: {
+            gallery,
+            filename,
+            url,
+            altText: imageData.altText,
+            description: imageData.description || null,
+            order: imageData.order,
+          },
+        })
+
+        results.push({ fileName: imageData.fileName, success: true })
+      } catch (error) {
+        console.error(`Erreur upload ${imageData.fileName}:`, error)
+        errors.push(`${imageData.fileName}: Erreur lors de l'upload`)
+      }
+    }
+
+    if (results.length === 0) {
+      return { 
+        success: false, 
+        error: `Aucune image n'a pu être uploadée. Erreurs: ${errors.join(', ')}` 
+      }
+    }
+
+    return { 
+      success: true, 
+      uploaded: results.length,
+      total: imagesData.length,
+      errors: errors.length > 0 ? errors : undefined
+    }
+  } catch (error) {
+    console.error('Erreur upload multiple images galerie:', error)
+    return { success: false, error: 'Erreur lors de l\'upload des images' }
   }
 }
 
@@ -461,6 +552,43 @@ export async function updateGalleryImageOrder(imageId: string, newOrder: number)
   } catch (error) {
     console.error('Erreur mise à jour ordre image galerie:', error)
     return { success: false, error: 'Erreur lors de la mise à jour de l\'ordre' }
+  }
+}
+
+export async function updateGalleryImage(
+  imageId: string,
+  data: {
+    altText?: string
+    description?: string | null
+    order?: number
+    gallery?: string
+    isActive?: boolean
+  }
+) {
+  try {
+    const image = await prisma.galleryImage.findUnique({
+      where: { id: imageId },
+    })
+
+    if (!image) {
+      return { success: false, error: 'Image non trouvée' }
+    }
+
+    await prisma.galleryImage.update({
+      where: { id: imageId },
+      data: {
+        altText: data.altText !== undefined ? data.altText : image.altText,
+        description: data.description !== undefined ? data.description : image.description,
+        order: data.order !== undefined ? data.order : image.order,
+        gallery: data.gallery !== undefined ? data.gallery : image.gallery,
+        isActive: data.isActive !== undefined ? data.isActive : image.isActive,
+      },
+    })
+
+    return { success: true }
+  } catch (error) {
+    console.error('Erreur mise à jour image galerie:', error)
+    return { success: false, error: 'Erreur lors de la mise à jour de l\'image' }
   }
 }
 

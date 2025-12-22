@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    formats: ['image/avif', 'image/webp'],
+    // Désactiver la conversion automatique pour préserver la qualité
+    formats: [],
+    // Qualité maximale pour les images
+    minimumCacheTTL: 60,
     remotePatterns: [
       {
         protocol: 'https',

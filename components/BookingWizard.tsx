@@ -61,7 +61,43 @@ export default function BookingWizard({ sessionTypes }: BookingWizardProps) {
     <div>
       {/* Indicateur de progression */}
       <div className="mb-12">
-        <div className="flex items-center justify-between">
+        {/* Layout vertical (mobile et desktop si pas assez de place) */}
+        <div className="space-y-4 lg:hidden">
+          {steps.map((step, index) => (
+            <div key={step.number} className="flex items-start gap-4">
+              <div className="flex flex-col items-center">
+                <div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm transition-colors flex-shrink-0 ${
+                    currentStep >= step.number
+                      ? 'bg-primary-600 text-white'
+                      : 'bg-gray-200 text-gray-500'
+                  }`}
+                >
+                  {step.number}
+                </div>
+                {index < steps.length - 1 && (
+                  <div
+                    className={`w-0.5 h-8 mt-2 transition-colors ${
+                      currentStep > step.number ? 'bg-primary-600' : 'bg-gray-200'
+                    }`}
+                  />
+                )}
+              </div>
+              <div className="flex-1 pt-2">
+                <span
+                  className={`text-sm font-medium ${
+                    currentStep >= step.number ? 'text-primary-600' : 'text-gray-500'
+                  }`}
+                >
+                  {step.title}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop : Horizontal uniquement si assez de place (lg et plus) */}
+        <div className="hidden lg:flex items-start justify-between">
           {steps.map((step, index) => (
             <div key={step.number} className="flex-1 flex items-center">
               <div className="flex flex-col items-center flex-1">
@@ -75,7 +111,7 @@ export default function BookingWizard({ sessionTypes }: BookingWizardProps) {
                   {step.number}
                 </div>
                 <span
-                  className={`mt-2 text-xs md:text-sm font-medium text-center ${
+                  className={`mt-2 text-sm font-medium text-center leading-tight ${
                     currentStep >= step.number ? 'text-primary-600' : 'text-gray-500'
                   }`}
                 >

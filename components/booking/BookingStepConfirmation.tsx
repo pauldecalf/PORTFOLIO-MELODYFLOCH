@@ -189,29 +189,32 @@ export default function BookingStepConfirmation({
         </ul>
       </div>
 
-      <div className="flex justify-between">
+      <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-0">
         <button
           onClick={onBack}
           disabled={isSubmitting}
-          className="btn-secondary disabled:opacity-50"
+          className="btn-secondary disabled:opacity-50 !text-sm sm:!text-base px-4 sm:px-8 py-2 sm:py-3"
         >
           ← Modifier
         </button>
         <button
           onClick={handleConfirm}
           disabled={isSubmitting}
-          className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed !text-sm sm:!text-base px-4 sm:px-8 py-2 sm:py-3"
         >
           {isSubmitting ? (
             <>
-              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" fill="none" viewBox="0 0 24 24">
+              <svg className="animate-spin -ml-1 mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5 text-white inline" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
               Confirmation...
             </>
           ) : (
-            'Confirmer la réservation'
+            <>
+              <span className="hidden sm:inline">Confirmer la réservation</span>
+              <span className="sm:hidden">Confirmer</span>
+            </>
           )}
         </button>
       </div>

@@ -34,6 +34,8 @@ export default async function DynamicImage({
           fill
           className={className}
           priority={priority}
+          quality={100}
+          unoptimized={true}
           style={{ objectFit: 'cover' }}
         />
       )
@@ -47,6 +49,8 @@ export default async function DynamicImage({
         height={height || 600}
         className={className}
         priority={priority}
+        quality={100}
+        unoptimized={true}
       />
     )
   }

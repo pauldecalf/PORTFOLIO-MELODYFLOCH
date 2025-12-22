@@ -77,13 +77,13 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
             {[
-              { key: 'preview-portraits', title: 'Portraits' },
-              { key: 'preview-nb', title: 'Noir & Blanc' },
-              { key: 'preview-lifestyle', title: 'Lifestyle' },
+              { key: 'preview-portraits', title: 'Portraits', slug: 'portraits' },
+              { key: 'preview-nb', title: 'Noir & Blanc', slug: 'noir-et-blanc' },
+              { key: 'preview-lifestyle', title: 'Lifestyle', slug: 'lifestyle' },
             ].map((item) => (
               <Link
                 key={item.key}
-                href="/portfolio"
+                href={`/portfolio/${item.slug}`}
                 className="group relative h-80 rounded-lg overflow-hidden image-hover-effect"
               >
                 <DynamicImage

@@ -178,7 +178,7 @@ Site : ${process.env.APP_URL}
 
   try {
     const result = await resend.emails.send({
-      from: `Melody Floc'h <${process.env.ADMIN_EMAIL}>`,
+      from: 'onboarding@resend.dev',
       to: clientEmail,
       subject: '✨ Votre séance photo est confirmée',
       html: htmlContent,
@@ -305,7 +305,7 @@ Voir dans l'admin : ${process.env.APP_URL}/admin
 
   try {
     const result = await resend.emails.send({
-      from: `Melody Floc'h <${process.env.ADMIN_EMAIL}>`,
+      from: 'onboarding@resend.dev',
       to: process.env.ADMIN_EMAIL!,
       subject: `🎉 Nouvelle réservation - ${clientName}`,
       html: htmlContent,
@@ -384,7 +384,7 @@ Melody Floc'h
 
   try {
     const result = await resend.emails.send({
-      from: `Melody Floc'h <${process.env.ADMIN_EMAIL}>`,
+      from: 'onboarding@resend.dev',
       to: clientEmail,
       subject: 'Annulation de votre séance photo',
       html: htmlContent,
@@ -437,7 +437,7 @@ ${message}
 
   try {
     const result = await resend.emails.send({
-      from: `Melody Floc'h <${process.env.ADMIN_EMAIL}>`,
+      from: 'onboarding@resend.dev',
       to: process.env.ADMIN_EMAIL!,
       replyTo: email,
       subject: `Message de ${name}`,

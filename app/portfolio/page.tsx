@@ -85,6 +85,8 @@ export default async function PortfolioPage() {
                           alt={image.altText}
                           fill
                           className="object-cover"
+                          quality={100}
+                          unoptimized={true}
                         />
                       </div>
                     ))
