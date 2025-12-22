@@ -75,17 +75,17 @@ export default function AdminEmails({ upcomingBookings, emailLogs }: AdminEmails
     },
   ]
 
-  function useTemplate(template: typeof templates[0]) {
+  const applyTemplate = (template: typeof templates[0]) => {
     const subjectInput = document.getElementById('subject') as HTMLInputElement
     const contentInput = document.getElementById('content') as HTMLTextAreaElement
     
-    subjectInput.value = template.subject
-    contentInput.value = template.content
+    if (subjectInput) subjectInput.value = template.subject
+    if (contentInput) contentInput.value = template.content
   }
 
   return (
     <div>
-      <h2 className="text-2xl font-serif font-bold mb-6">Envoi d'Emails</h2>
+      <h2 className="text-2xl font-serif font-bold mb-6">Envoi d&apos;Emails</h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Formulaire d'envoi */}
@@ -167,7 +167,7 @@ export default function AdminEmails({ upcomingBookings, emailLogs }: AdminEmails
                   <button
                     key={index}
                     type="button"
-                    onClick={() => useTemplate(template)}
+                    onClick={() => applyTemplate(template)}
                     className="text-xs px-3 py-1 bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
                   >
                     {template.name}
@@ -253,7 +253,7 @@ export default function AdminEmails({ upcomingBookings, emailLogs }: AdminEmails
         <ul className="text-sm text-blue-800 space-y-1">
           <li>• Utilisez les templates pour gagner du temps</li>
           <li>• Personnalisez toujours le message pour chaque client</li>
-          <li>• Les emails sont automatiquement enregistrés dans l'historique</li>
+          <li>• Les emails sont automatiquement enregistrés dans l&apos;historique</li>
           <li>• Vous pouvez lier un email à une réservation spécifique</li>
         </ul>
       </div>

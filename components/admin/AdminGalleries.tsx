@@ -333,7 +333,7 @@ export default function AdminGalleries({ images: initialImages }: AdminGalleries
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="order">Ordre d'affichage</Label>
+              <Label htmlFor="order">Ordre d&apos;affichage</Label>
               <Input
                 type="number"
                 name="order"
@@ -477,7 +477,7 @@ export default function AdminGalleries({ images: initialImages }: AdminGalleries
                                   />
                                 </div>
                                 <div className="space-y-1">
-                                  <Label htmlFor={`order-${index}`}>Ordre d'affichage</Label>
+                                  <Label htmlFor={`order-${index}`}>Ordre d&apos;affichage</Label>
                                   <Input
                                     type="number"
                                     id={`order-${index}`}
@@ -649,9 +649,9 @@ export default function AdminGalleries({ images: initialImages }: AdminGalleries
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <CardHeader>
-              <CardTitle>Modifier l'image</CardTitle>
+              <CardTitle>Modifier l&apos;image</CardTitle>
               <CardDescription>
-                Modifiez les informations de l'image
+                Modifiez les informations de l&apos;image
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -707,7 +707,7 @@ export default function AdminGalleries({ images: initialImages }: AdminGalleries
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="edit-order">Ordre d'affichage</Label>
+                  <Label htmlFor="edit-order">Ordre d&apos;affichage</Label>
                   <Input
                     id="edit-order"
                     type="number"
