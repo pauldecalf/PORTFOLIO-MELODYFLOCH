@@ -18,10 +18,18 @@ export const dynamic = 'force-dynamic'
 
 export default async function BookingPage() {
   // Récupérer les types de séances actifs
-  const sessionTypes = await prisma.sessionType.findMany({
-    where: { isActive: true },
-    orderBy: { order: 'asc' },
-  })
+  let sessionTypes = []
+  try {
+    sessionTypes = await prisma.sessionType.findMany({
+      where: { isActive: true },
+      orderBy: { order: 'asc' },
+    })
+  } catch (error: any) {
+    // Si la table n'existe pas, retourner un tableau vide
+    // Les migrations devraient créer la table au prochain démarrage
+    console.error('Erreur lors de la récupération des types de séances:', error)
+    sessionTypes = []
+  }
 
   return (
     <>
