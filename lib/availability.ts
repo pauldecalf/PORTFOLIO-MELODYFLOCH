@@ -1,6 +1,5 @@
 import { prisma } from './prisma'
 import { format, parse, addMinutes, isWithinInterval, isSameDay } from 'date-fns'
-import { zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz'
 
 const TIMEZONE = 'Europe/Paris'
 const BUFFER_MINUTES = 15 // Buffer entre les séances

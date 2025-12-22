@@ -439,7 +439,7 @@ ${message}
     const result = await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: process.env.ADMIN_EMAIL!,
-      replyTo: email,
+      reply_to: email,
       subject: `Message de ${name}`,
       html: htmlContent,
       text: textContent,
