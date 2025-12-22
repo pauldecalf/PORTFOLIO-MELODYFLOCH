@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import PageHero from '@/components/PageHero'
 import BookingWizard from '@/components/BookingWizard'
 import { prisma } from '@/lib/prisma'
+import { SessionType } from '@prisma/client'
 
 export const metadata: Metadata = {
   title: 'Réserver une séance',
@@ -18,7 +19,7 @@ export const dynamic = 'force-dynamic'
 
 export default async function BookingPage() {
   // Récupérer les types de séances actifs
-  let sessionTypes = []
+  let sessionTypes: SessionType[] = []
   try {
     sessionTypes = await prisma.sessionType.findMany({
       where: { isActive: true },
