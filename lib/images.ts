@@ -1,8 +1,38 @@
 import { prisma } from './prisma'
 
 /**
- * Récupère une image par sa clé
+ * Convertit une URL d'image pour utiliser l'API route en production
+ * Cette fonction peut être utilisée côté serveur et client
  */
+export function getImageUrl(url: string): string {
+  // Si l'URL commence déjà par /api/uploads, la retourner telle quelle
+  if (url.startsWith('/api/uploads/')) {
+    return url
+  }
+  
+  // Si l'URL commence par /uploads/, la convertir en /api/uploads/ en production
+  if (url.startsWith('/uploads/')) {
+    const filename = url.replace('/uploads/', '')
+    // En production, toujours utiliser l'API route pour servir les images
+    // Cela permet de servir les images même si elles sont sur un volume persistant
+    if (typeof window === 'undefined') {
+      // Côté serveur
+      return process.env.NODE_ENV === 'production' 
+        ? `/api/uploads/${filename}`
+        : url
+    } else {
+      // Côté client - détecter si on est en production via l'URL
+      const isProduction = window.location.hostname !== 'localhost' && !window.location.hostname.includes('127.0.0.1')
+      return isProduction 
+        ? `/api/uploads/${filename}`
+        : url
+    }
+  }
+  
+  // Sinon, retourner l'URL telle quelle (peut être une URL externe)
+  return url
+}
+
 export async function getImageByKey(key: string) {
   try {
     const image = await prisma.siteImage.findUnique({
@@ -11,16 +41,21 @@ export async function getImageByKey(key: string) {
         isActive: true,
       },
     })
-    return image
+
+    if (!image) {
+      return null
+    }
+
+    return {
+      ...image,
+      url: getImageUrl(image.url),
+    }
   } catch (error) {
-    console.error(`Erreur récupération image ${key}:`, error)
+    console.error('Erreur récupération image:', error)
     return null
   }
 }
 
-/**
- * Récupère plusieurs images par catégorie
- */
 export async function getImagesByCategory(category: string) {
   try {
     const images = await prisma.siteImage.findMany({
@@ -28,44 +63,19 @@ export async function getImagesByCategory(category: string) {
         category,
         isActive: true,
       },
-      orderBy: {
-        order: 'asc',
-      },
+      orderBy: { order: 'asc' },
     })
-    return images
-  } catch (error) {
-    console.error(`Erreur récupération images catégorie ${category}:`, error)
-    return []
-  }
-}
 
-/**
- * Récupère toutes les images actives
- */
-export async function getAllActiveImages() {
-  try {
-    const images = await prisma.siteImage.findMany({
-      where: {
-        isActive: true,
-      },
-      orderBy: {
-        order: 'asc',
-      },
-    })
-    return images
+    return images.map(image => ({
+      ...image,
+      url: getImageUrl(image.url),
+    }))
   } catch (error) {
     console.error('Erreur récupération images:', error)
     return []
   }
 }
 
-// ============================================
-// GALERIES DU PORTFOLIO
-// ============================================
-
-/**
- * Récupère les images d'une galerie du portfolio
- */
 export async function getGalleryImages(gallery: string) {
   try {
     const images = await prisma.galleryImage.findMany({
@@ -73,53 +83,29 @@ export async function getGalleryImages(gallery: string) {
         gallery,
         isActive: true,
       },
-      orderBy: {
-        order: 'asc',
-      },
+      orderBy: { order: 'asc' },
     })
-    return images
+
+    return images.map(image => ({
+      ...image,
+      url: getImageUrl(image.url),
+    }))
   } catch (error) {
-    console.error(`Erreur récupération images galerie ${gallery}:`, error)
+    console.error('Erreur récupération images galerie:', error)
     return []
   }
 }
 
-/**
- * Récupère le nombre d'images d'une galerie
- */
-export async function getGalleryImageCount(gallery: string) {
+export async function getGalleryImageCount(gallery: string): Promise<number> {
   try {
-    const count = await prisma.galleryImage.count({
+    return await prisma.galleryImage.count({
       where: {
         gallery,
         isActive: true,
       },
     })
-    return count
   } catch (error) {
-    console.error(`Erreur comptage images galerie ${gallery}:`, error)
+    console.error('Erreur comptage images galerie:', error)
     return 0
   }
 }
-
-/**
- * Récupère une image preview pour une galerie (première image)
- */
-export async function getGalleryPreview(gallery: string) {
-  try {
-    const image = await prisma.galleryImage.findFirst({
-      where: {
-        gallery,
-        isActive: true,
-      },
-      orderBy: {
-        order: 'asc',
-      },
-    })
-    return image
-  } catch (error) {
-    console.error(`Erreur récupération preview galerie ${gallery}:`, error)
-    return null
-  }
-}
-

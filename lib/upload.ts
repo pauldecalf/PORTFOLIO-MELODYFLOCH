@@ -2,7 +2,11 @@ import fs from 'fs/promises'
 import path from 'path'
 import { randomUUID } from 'crypto'
 
-const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads')
+// En production sur Railway, utiliser un volume persistant si disponible
+// Sinon utiliser le dossier public/uploads (qui sera perdu à chaque redéploiement)
+const UPLOAD_DIR = process.env.UPLOAD_DIR 
+  ? process.env.UPLOAD_DIR 
+  : path.join(process.cwd(), 'public', 'uploads')
 
 // Créer le dossier uploads si nécessaire
 export async function ensureUploadDir() {
@@ -31,9 +35,15 @@ export async function saveUploadedImage(
   // Sauvegarder l'image dans son format d'origine sans compression ni redimensionnement
   await fs.writeFile(filepath, buffer)
 
+  // En production, utiliser l'API route pour servir les images
+  // Cela permet de servir les images même si elles sont sur un volume persistant
+  const url = process.env.NODE_ENV === 'production' 
+    ? `/api/uploads/${filename}`
+    : `/uploads/${filename}`
+
   return {
     filename,
-    url: `/uploads/${filename}`,
+    url,
   }
 }
 

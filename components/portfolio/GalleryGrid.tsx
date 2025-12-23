@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import ImageQualityDisclaimer from '@/components/ImageQualityDisclaimer'
+import { getImageUrl } from '@/lib/images'
 
 interface GalleryImage {
   id: string
@@ -117,7 +118,7 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
             onClick={() => handleImageClick(image, i)}
           >
             <Image
-              src={image.url}
+              src={getImageUrl(image.url)}
               alt={image.altText}
               fill
               className="object-cover transition-transform hover:scale-105"
@@ -222,7 +223,7 @@ export default function GalleryGrid({ images }: GalleryGridProps) {
             {/* Image */}
             <div className="relative w-full h-full flex flex-col items-center justify-center">
               <Image
-                src={selectedImage.url}
+                src={getImageUrl(selectedImage.url)}
                 alt={selectedImage.altText}
                 fill
                 className="object-contain"
