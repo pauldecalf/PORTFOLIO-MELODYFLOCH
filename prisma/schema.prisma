@@ -6,13 +6,13 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 // Types de séances photo disponibles
 model SessionType {
-  id          String    @id @default(cuid())
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
   name        String    @unique
   slug        String    @unique
   description String
@@ -27,7 +27,7 @@ model SessionType {
 
 // Disponibilités hebdomadaires récurrentes
 model WeeklyAvailability {
-  id        String   @id @default(cuid())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   dayOfWeek Int      // 0 = Dimanche, 1 = Lundi, ..., 6 = Samedi
   startTime String   // Format "HH:mm" (ex: "09:00")
   endTime   String   // Format "HH:mm" (ex: "18:00")
@@ -40,7 +40,7 @@ model WeeklyAvailability {
 
 // Dates bloquées (vacances, jours fériés, etc.)
 model BlockedDate {
-  id        String   @id @default(cuid())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   date      DateTime // Date complète bloquée
   reason    String?  // Raison optionnelle
   createdAt DateTime @default(now())
@@ -51,8 +51,8 @@ model BlockedDate {
 
 // Réservations
 model Booking {
-  id            String      @id @default(cuid())
-  sessionTypeId String
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  sessionTypeId String      @db.ObjectId
   sessionType   SessionType @relation(fields: [sessionTypeId], references: [id])
   
   // Date et heure
@@ -84,7 +84,7 @@ model Booking {
 
 // Images du site (gestion via admin)
 model SiteImage {
-  id          String   @id @default(cuid())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   key         String   @unique // Clé unique pour identifier l'image (ex: "hero-home", "about-melody")
   filename    String   // Nom du fichier
   url         String   // URL de l'image
@@ -102,7 +102,7 @@ model SiteImage {
 
 // Emails envoyés depuis l'admin
 model EmailLog {
-  id          String   @id @default(cuid())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   recipient   String   // Email du destinataire
   subject     String   // Sujet
   content     String   // Contenu de l'email
@@ -117,7 +117,7 @@ model EmailLog {
 
 // Images des galeries du portfolio
 model GalleryImage {
-  id          String   @id @default(cuid())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   gallery     String   // Galerie: "portraits", "noir-et-blanc", "lifestyle"
   filename    String   // Nom du fichier
   url         String   // URL de l'image
@@ -132,4 +132,3 @@ model GalleryImage {
   @@index([isActive])
   @@index([order])
 }
-

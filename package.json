@@ -5,10 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "prisma migrate deploy && npm run db:seed-if-empty && next start",
+    "start": "node scripts/safe-start.js",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "db:migrate": "prisma migrate deploy",
+    "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
     "db:seed-if-empty": "tsx scripts/seed-if-empty.ts"
   },
