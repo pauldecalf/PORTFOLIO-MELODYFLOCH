@@ -4,6 +4,8 @@ const prisma = new PrismaClient()
 
 async function seedIfEmpty() {
   try {
+    console.log('🔍 Checking database state...')
+    
     // Vérifier si des types de séances existent déjà
     const existingSessions = await prisma.sessionType.count()
     
@@ -13,6 +15,7 @@ async function seedIfEmpty() {
     }
 
     console.log('🌱 Seeding database...')
+    console.log('⏳ Creating session types...')
 
     // Types de séances
     const sessionTypes = [
