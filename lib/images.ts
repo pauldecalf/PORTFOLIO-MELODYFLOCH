@@ -35,7 +35,7 @@ export function getImageUrl(url: string): string {
 
 export async function getImageByKey(key: string) {
   try {
-    const image = await prisma.siteImage.findUnique({
+    const image = await prisma.siteImage.findFirst({
       where: {
         key,
         isActive: true,
