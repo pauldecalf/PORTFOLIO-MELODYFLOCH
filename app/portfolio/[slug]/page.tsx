@@ -9,19 +9,19 @@ const galleries = {
   portraits: {
     title: 'Portraits',
     description:
-      'Une collection de portraits qui célèbrent l\'individualité et la beauté unique de chaque personne. Chaque séance photo portrait est une exploration de la personnalité, capturée avec sensibilité et authenticité.',
+      'Une collection de portraits photographiques réalisés aux Essarts-le-Roi et dans les Yvelines. Chaque séance photo portrait célèbre l\'individualité et la beauté unique de chaque personne. Melody Floc\'h capture votre personnalité avec sensibilité et authenticité en studio ou à domicile (Rambouillet, Saint-Arnoult-en-Yvelines, Le Perray).',
     count: 24,
   },
   'noir-et-blanc': {
     title: 'Portraits Noir & Blanc',
     description:
-      'Le noir et blanc révèle l\'âme du portrait. Sans la distraction de la couleur, l\'émotion et l\'expression prennent toute leur intensité. Ces photographies noir et blanc intemporelles transcendent les époques.',
+      'Photographie noir et blanc intemporelle aux Essarts-le-Roi (78690). Le noir et blanc révèle l\'âme du portrait avec intensité. Melody Floc\'h, photographe dans les Yvelines, crée des portraits en noir et blanc qui transcendent les époques. Séances en studio ou en extérieur.',
     count: 18,
   },
   lifestyle: {
     title: 'À travers mon objectif',
     description:
-      'La photographie lifestyle capture la beauté du quotidien. Ces images spontanées et naturelles racontent des histoires authentiques, des moments de vie préservés pour toujours.',
+      'Photographie lifestyle dans les Yvelines par Melody Floc\'h. Séances photo naturelles et spontanées aux Essarts-le-Roi, Rambouillet et environs. Ces images lifestyle capturent la beauté du quotidien et racontent des histoires authentiques de vie de famille.',
     count: 30,
   },
 }

@@ -4,13 +4,13 @@ import ContactForm from '@/components/ContactForm'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Contact',
+  title: 'Contact - Photographe Les Essarts-le-Roi 78690',
   description:
-    'Contactez Melody Floc\'h pour réserver une séance photo portrait ou lifestyle. Disponible pour répondre à toutes vos questions sur mes services photographiques.',
+    'Contactez Melody Floc\'h, photographe aux Essarts-le-Roi (78690). Réservez votre séance photo portrait ou lifestyle dans les Yvelines. Studio photo à Rambouillet, déplacement à domicile dans le 78.',
   openGraph: {
-    title: 'Contact | Melody Floc\'h',
+    title: 'Contact | Melody Floc\'h - Photographe Yvelines',
     description:
-      'Contactez Melody Floc\'h pour réserver une séance photo portrait ou lifestyle.',
+      'Contactez Melody Floc\'h pour une séance photo dans les Yvelines. Studio aux Essarts-le-Roi.',
   },
 }
 
@@ -19,7 +19,7 @@ export default function ContactPage() {
     <>
       <PageHero
         title="Contact"
-        description="Une question ? Un projet photo ? Je serais ravie d'échanger avec vous"
+        description="Une question ? Un projet photo ? Je serais ravi d'échanger avec vous"
       />
 
       <section className="section-padding bg-white">
@@ -35,6 +35,40 @@ export default function ContactPage() {
               </p>
 
               <div className="space-y-6 mb-8">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mr-4">
+                    <svg
+                      className="w-6 h-6 text-primary-600"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-1">Studio photo</h3>
+                    <p className="text-gray-600">
+                      Les Essarts-le-Roi<br />
+                      78690, Yvelines<br />
+                      <span className="text-sm text-gray-500">
+                        Secteur : Rambouillet, Saint-Arnoult, Le Perray-en-Yvelines
+                      </span>
+                    </p>
+                  </div>
+                </div>
+
                 <div className="flex items-start">
                   <div className="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mr-4">
                     <svg
@@ -82,7 +116,10 @@ export default function ContactPage() {
                     <h3 className="font-semibold mb-1">Disponibilité</h3>
                     <p className="text-gray-600">
                       Du mardi au vendredi : 9h - 18h<br />
-                      Samedi : 10h - 16h
+                      Samedi : 10h - 16h<br />
+                      <span className="text-sm text-gray-500">
+                        Déplacement possible dans les Yvelines
+                      </span>
                     </p>
                   </div>
                 </div>

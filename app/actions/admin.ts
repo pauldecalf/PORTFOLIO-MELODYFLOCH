@@ -591,4 +591,3 @@ export async function updateGalleryImage(
     return { success: false, error: 'Erreur lors de la mise à jour de l\'image' }
   }
 }
-

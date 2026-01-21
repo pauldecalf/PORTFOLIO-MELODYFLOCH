@@ -5,13 +5,13 @@ import PageHero from '@/components/PageHero'
 import { getGalleryImages, getGalleryImageCount } from '@/lib/images'
 
 export const metadata: Metadata = {
-  title: 'Portfolio',
+  title: 'Portfolio - Photographe Les Essarts-le-Roi Yvelines',
   description:
-    'Découvrez le portfolio de Melody Floc\'h : photographie portrait, noir & blanc et lifestyle. Une sélection de mes plus beaux travaux photographiques.',
+    'Portfolio de Melody Floc\'h, photographe aux Essarts-le-Roi (78690). Portraits artistiques, noir & blanc et lifestyle. Réalisations en studio et extérieur dans les Yvelines : Rambouillet, Saint-Arnoult, Le Perray-en-Yvelines.',
   openGraph: {
-    title: 'Portfolio | Melody Floc\'h',
+    title: 'Portfolio | Melody Floc\'h - Photographe Yvelines',
     description:
-      'Découvrez le portfolio de Melody Floc\'h : photographie portrait, noir & blanc et lifestyle.',
+      'Portfolio de photographie portrait, noir & blanc et lifestyle dans les Yvelines par Melody Floc\'h.',
   },
 }
 

@@ -24,3 +24,4 @@ fi
 echo "🚀 Starting Next.js..."
 exec npm start
 
+

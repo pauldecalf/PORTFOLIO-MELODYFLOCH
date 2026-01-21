@@ -6,15 +6,31 @@ export default function Footer() {
   return (
     <footer className="bg-primary-50 border-t border-primary-100">
       <div className="container-custom py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* À propos */}
           <div>
             <h3 className="text-lg font-serif font-semibold text-primary-700 mb-4">
               Melody Floc'h
             </h3>
             <p className="text-sm text-gray-600 leading-relaxed">
-              Photographe spécialisée en portraits artistiques et photographie lifestyle.
-              Capturer l'authenticité et la beauté de chaque instant.
+              Photographe professionnel spécialisé en portraits artistiques et photographie lifestyle.
+            </p>
+          </div>
+
+          {/* Localisation */}
+          <div>
+            <h3 className="text-lg font-serif font-semibold text-primary-700 mb-4">
+              Studio photo
+            </h3>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              Les Essarts-le-Roi<br />
+              78690, Yvelines<br />
+              <span className="mt-2 block text-xs text-gray-500">
+                Secteur d'intervention :<br />
+                Rambouillet, Saint-Arnoult,<br />
+                Le Perray-en-Yvelines,<br />
+                Clairefontaine, Bullion
+              </span>
             </p>
           </div>
 
@@ -34,6 +50,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/specialites"
+                  className="text-sm text-gray-600 hover:text-primary-600 transition-colors"
+                >
+                  Spécialités
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/about"
                   className="text-sm text-gray-600 hover:text-primary-600 transition-colors"
                 >
@@ -46,6 +70,14 @@ export default function Footer() {
                   className="text-sm text-gray-600 hover:text-primary-600 transition-colors"
                 >
                   Tarifs
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/zone-intervention"
+                  className="text-sm text-gray-600 hover:text-primary-600 transition-colors"
+                >
+                  Zone d'intervention
                 </Link>
               </li>
               <li>

@@ -69,7 +69,7 @@ RESEND_API_KEY="re_xxxxxxxxxxxxxxxxxxxx"
 ADMIN_EMAIL="votre@email.com"
 
 # App
-APP_URL="http://localhost:3000"
+APP_URL="https://melody.pauldecalf.fr"
 
 # Admin
 ADMIN_PASSWORD="votre_mot_de_passe_admin"

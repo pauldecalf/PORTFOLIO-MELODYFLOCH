@@ -14,7 +14,7 @@ Créez un fichier `.env` à la racine :
 DATABASE_URL="file:./dev.db"
 RESEND_API_KEY="re_votre_cle_api_resend"
 ADMIN_EMAIL="votre@email.com"
-APP_URL="http://localhost:3000"
+APP_URL="https://melody.pauldecalf.fr"
 ADMIN_PASSWORD="admin123"
 ```
 

@@ -232,7 +232,7 @@ npx prisma generate      # Génère client Prisma
 | `DATABASE_URL` | URL connexion DB | `file:./dev.db` |
 | `RESEND_API_KEY` | Clé API Resend | `re_xxx...` |
 | `ADMIN_EMAIL` | Email photographe | `melody@example.com` |
-| `APP_URL` | URL publique app | `http://localhost:3000` |
+| `APP_URL` | URL publique app | `https://melody.pauldecalf.fr` |
 | `ADMIN_PASSWORD` | Mot de passe admin | `admin123` |
 
 ---

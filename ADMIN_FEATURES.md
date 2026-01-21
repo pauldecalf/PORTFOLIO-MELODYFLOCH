@@ -292,3 +292,4 @@ Le dashboard affiche maintenant :
 ✅ **Toutes les nouvelles fonctionnalités sont opérationnelles !**
 
 
+

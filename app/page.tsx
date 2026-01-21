@@ -6,13 +6,13 @@ import DynamicImage from '@/components/DynamicImage'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Photographe Portrait & Lifestyle | Melody Floc\'h',
+  title: 'Photographe Portrait Les Essarts-le-Roi 78690 | Melody Floc\'h',
   description:
-    'Melody Floc\'h, photographe spécialisée en portraits artistiques, noir & blanc et photographie lifestyle. Réservez votre séance photo pour capturer vos plus beaux moments avec une photographe passionnée.',
+    'Melody Floc\'h, photographe professionnel aux Essarts-le-Roi (78690). Portraits artistiques, noir & blanc et photographie lifestyle. Séances photo dans les Yvelines : Rambouillet, Saint-Arnoult, Le Perray-en-Yvelines, Clairefontaine. Studio et déplacement à domicile.',
   openGraph: {
-    title: 'Photographe Portrait & Lifestyle | Melody Floc\'h',
+    title: 'Photographe Portrait Les Essarts-le-Roi 78690 | Melody Floc\'h',
     description:
-      'Melody Floc\'h, photographe spécialisée en portraits artistiques, noir & blanc et photographie lifestyle. Réservez votre séance photo.',
+      'Photographe professionnelle aux Essarts-le-Roi. Portraits artistiques et lifestyle dans les Yvelines. Réservez votre séance photo.',
   },
 }
 
@@ -25,19 +25,21 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="animate-fade-in">
               <h1 className="heading-xl mb-6">
-                Photographe Portrait & Lifestyle
+                Photographe Portrait & Lifestyle aux Essarts-le-Roi
               </h1>
               <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed">
-              Bienvenue dans mon univers photographique. Je suis Melody Floc'h, photographe spécialisée 
-              en <strong>portraits artistiques</strong>, <strong>photographie noir et blanc</strong> et 
-              <strong> séances lifestyle</strong>. Mon approche sensible et authentique met en valeur 
-              votre personnalité unique à travers des clichés intemporels.
+              Bienvenue dans mon univers photographique. Je suis <strong>Melody Floc'h</strong>, 
+              <strong>photographe professionnel</strong> basé aux <strong>Essarts-le-Roi (78690)</strong>. 
+              Spécialisé en <strong>portraits artistiques</strong>, <strong>photographie noir et blanc</strong> et 
+              <strong> séances lifestyle</strong>, j'interviens dans tout le secteur des <strong>Yvelines</strong> : 
+              Rambouillet, Saint-Arnoult-en-Yvelines, Le Perray-en-Yvelines, Clairefontaine-en-Yvelines.
               </p>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Que ce soit pour une séance photo portrait professionnelle, des photos de famille 
-                ou un shooting lifestyle, je crée avec vous des images qui racontent votre histoire. 
-                Chaque séance photo est une expérience personnalisée où l'émotion et la beauté 
-                naturelle prennent vie devant l'objectif.
+                Que ce soit pour une <strong>séance photo portrait professionnelle</strong>, des photos de famille 
+                ou un <strong>shooting lifestyle</strong>, je crée avec vous des images qui racontent votre histoire. 
+                Mon <strong>studio photo</strong> vous accueille aux Essarts-le-Roi, avec possibilité de 
+                <strong> déplacement à domicile</strong> dans les communes environnantes (Rambouillet, Gazeran, 
+                Bullion, Auffargis, Cernay-la-Ville, Bonnelles).
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/booking" className="btn-primary text-center">
@@ -110,6 +112,52 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Specialites Preview */}
+      <section className="section-padding bg-white">
+        <div className="container-custom">
+          <div className="text-center mb-12">
+            <h2 className="heading-lg mb-4">Mes Spécialités Photo</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Photographe polyvalent pour tous vos moments de vie
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
+            {[
+              { nom: 'Mariage', icon: '💍', slug: 'mariage' },
+              { nom: 'Grossesse', icon: '🤰', slug: 'grossesse' },
+              { nom: 'Bébé', icon: '👶', slug: 'bebe' },
+              { nom: 'Famille', icon: '👨‍👩‍👧‍👦', slug: 'famille' },
+              { nom: 'Couple', icon: '💑', slug: 'couple' },
+              { nom: 'Corporate', icon: '💼', slug: 'corporate' },
+              { nom: 'Animaux', icon: '🐕', slug: 'animaux' },
+              { nom: 'Enfant', icon: '🧒', slug: 'enfant' },
+              { nom: 'Événementiel', icon: '🎉', slug: 'evenementiel' },
+              { nom: 'Book', icon: '📸', slug: 'book' },
+            ].map((item) => (
+              <Link
+                key={item.slug}
+                href="/specialites"
+                className="group bg-gray-50 hover:bg-primary-50 rounded-lg p-6 text-center transition-all duration-300 hover:shadow-md border-2 border-transparent hover:border-primary-400"
+              >
+                <div className="text-4xl mb-2 group-hover:scale-110 transition-transform">
+                  {item.icon}
+                </div>
+                <h3 className="text-sm font-semibold text-gray-700 group-hover:text-primary-600">
+                  {item.nom}
+                </h3>
+              </Link>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Link href="/specialites" className="btn-primary">
+              Découvrir toutes les spécialités
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* About Preview */}
       <section className="section-padding bg-primary-50">
         <div className="container-custom">
@@ -128,7 +176,7 @@ export default function HomePage() {
             <div>
               <h2 className="heading-lg mb-6">À propos de moi</h2>
               <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                Passionnée par l'art du portrait depuis plus de 10 ans, j'ai développé un style 
+                Passionné par l'art du portrait depuis plus de 10 ans, j'ai développé un style 
                 photographique unique qui allie élégance intemporelle et authenticité. Mon approche 
                 privilégie la connexion humaine et l'émotion sincère.
               </p>
@@ -228,7 +276,7 @@ export default function HomePage() {
               session="Séance Noir & Blanc"
             />
             <TestimonialCard
-              quote="Professionnalisme, créativité et bienveillance. Melody est une photographe passionnée qui sublime chaque instant. Merci pour ces souvenirs précieux."
+              quote="Professionnalisme, créativité et bienveillance. Melody est un photographe passionné qui sublime chaque instant. Merci pour ces souvenirs précieux."
               author="Emma R."
               session="Séance Lifestyle"
             />
@@ -239,7 +287,7 @@ export default function HomePage() {
       {/* CTA Final */}
       <section className="section-padding bg-primary-600 text-white">
         <div className="container-custom text-center">
-          <h2 className="heading-lg mb-6">Prête à capturer vos plus beaux moments ?</h2>
+          <h2 className="heading-lg mb-6">Prêt à capturer vos plus beaux moments ?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
             Réservez dès maintenant votre séance photo et offrez-vous une expérience unique
           </p>
@@ -255,18 +303,71 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
           '@context': 'https://schema.org',
-          '@type': 'ProfessionalService',
+          '@type': 'LocalBusiness',
+          '@id': process.env.APP_URL || 'http://localhost:3000',
           name: 'Melody Floc\'h Photography',
+          alternateName: 'Melody Floc\'h - Photographe Portrait',
           description:
-            'Melody Floc\'h, photographe spécialisée en portraits artistiques, noir & blanc et photographie lifestyle',
+            'Photographe professionnel spécialisé en portraits artistiques, noir & blanc et photographie lifestyle aux Essarts-le-Roi et dans les Yvelines',
             url: process.env.APP_URL || 'http://localhost:3000',
-            telephone: '',
+            telephone: '+33',
             priceRange: '€€',
             image: `${process.env.APP_URL || 'http://localhost:3000'}/og-image.jpg`,
             address: {
               '@type': 'PostalAddress',
+              streetAddress: '',
+              addressLocality: 'Les Essarts-le-Roi',
+              addressRegion: 'Yvelines',
+              postalCode: '78690',
               addressCountry: 'FR',
             },
+            geo: {
+              '@type': 'GeoCoordinates',
+              latitude: 48.7169,
+              longitude: 1.9042,
+            },
+            areaServed: [
+              {
+                '@type': 'City',
+                name: 'Les Essarts-le-Roi',
+              },
+              {
+                '@type': 'City',
+                name: 'Rambouillet',
+              },
+              {
+                '@type': 'City',
+                name: 'Saint-Arnoult-en-Yvelines',
+              },
+              {
+                '@type': 'City',
+                name: 'Le Perray-en-Yvelines',
+              },
+              {
+                '@type': 'City',
+                name: 'Clairefontaine-en-Yvelines',
+              },
+              {
+                '@type': 'City',
+                name: 'Bullion',
+              },
+              {
+                '@type': 'City',
+                name: 'Gazeran',
+              },
+              {
+                '@type': 'City',
+                name: 'Auffargis',
+              },
+              {
+                '@type': 'City',
+                name: 'Cernay-la-Ville',
+              },
+              {
+                '@type': 'City',
+                name: 'Bonnelles',
+              },
+            ],
             openingHoursSpecification: [
               {
                 '@type': 'OpeningHoursSpecification',
@@ -282,6 +383,36 @@ export default function HomePage() {
               },
             ],
             sameAs: [],
+            hasOfferCatalog: {
+              '@type': 'OfferCatalog',
+              name: 'Services de Photographie',
+              itemListElement: [
+                {
+                  '@type': 'Offer',
+                  itemOffered: {
+                    '@type': 'Service',
+                    name: 'Séance Portrait',
+                    description: 'Séance photo portrait artistique',
+                  },
+                },
+                {
+                  '@type': 'Offer',
+                  itemOffered: {
+                    '@type': 'Service',
+                    name: 'Séance Noir et Blanc',
+                    description: 'Séance photo portrait noir et blanc',
+                  },
+                },
+                {
+                  '@type': 'Offer',
+                  itemOffered: {
+                    '@type': 'Service',
+                    name: 'Séance Lifestyle',
+                    description: 'Séance photo lifestyle et famille',
+                  },
+                },
+              ],
+            },
           }),
         }}
       />

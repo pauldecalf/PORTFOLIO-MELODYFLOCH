@@ -252,7 +252,7 @@ export default function PricingPage() {
 
       <section className="section-padding bg-primary-600 text-white">
         <div className="container-custom text-center">
-          <h2 className="heading-md mb-6">Prêt(e) à réserver votre séance photo ?</h2>
+          <h2 className="heading-md mb-6">Prêt à réserver votre séance photo ?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
             Choisissez votre formule et réservez votre créneau en quelques clics
           </p>
