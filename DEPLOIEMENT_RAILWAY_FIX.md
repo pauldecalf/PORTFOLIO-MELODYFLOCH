@@ -13,7 +13,7 @@ Les erreurs 404 sur les images viennent d'un problème de configuration de la ba
 4. Ajoutez/Modifiez les variables suivantes :
 
 ```env
-DATABASE_URL=mongodb+srv://admin:admin@atlascluster.vfolo9m.mongodb.net/melody-photography?retryWrites=true&w=majority&appName=AtlasCluster
+DATABASE_URL=mongodb+srv://admin:admin@atlascluster.vfolo9m.mongodb.net/melody?retryWrites=true&w=majority&appName=AtlasCluster
 APP_URL=https://melody.pauldecalf.fr
 ADMIN_EMAIL=pauldecalf@outlook.fr
 RESEND_API_KEY=re_NhNUJsVr_FKsryMmjXhHE8qqNHk7bErFE
