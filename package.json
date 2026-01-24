@@ -12,7 +12,9 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:seed-if-empty": "tsx scripts/seed-if-empty.ts",
     "db:clean-images": "tsx scripts/clean-test-images.ts",
-    "db:reset-images": "tsx scripts/reset-all-images.ts"
+    "db:reset-images": "tsx scripts/reset-all-images.ts",
+    "db:check-integrity": "tsx scripts/check-image-integrity.ts",
+    "db:clean-orphaned-files": "tsx scripts/clean-orphaned-files.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
