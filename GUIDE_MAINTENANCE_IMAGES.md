@@ -20,20 +20,33 @@ Cela cause des erreurs 404 car le site essaie de charger une image qui n'existe 
 
 ## 🛠️ Scripts de maintenance
 
-### 1. Vérifier l'intégrité des images
+### 1. Vérifier l'intégrité complète (DB ↔ Fichiers)
 
 ```bash
 npm run db:check-integrity
 ```
 
-Ce script :
+Ce script vérifie la cohérence **dans un sens** :
 - ✅ Vérifie que chaque enregistrement DB a son fichier
-- 🧹 Supprime automatiquement les enregistrements orphelins
+- 🧹 Supprime automatiquement les enregistrements orphelins (DB sans fichier)
 - 📊 Affiche un résumé
 
-**⚠️ À lancer après chaque redéploiement sur Railway (si pas de volume persistant)**
+### 2. Nettoyer les fichiers orphelins
 
-### 2. Nettoyer les images de test
+```bash
+npm run db:clean-orphaned-files
+```
+
+Ce script vérifie la cohérence **dans l'autre sens** :
+- ✅ Vérifie que chaque fichier a un enregistrement DB
+- 🧹 Supprime automatiquement les fichiers orphelins (fichiers sans DB)
+- 📊 Affiche un résumé
+
+**⚠️ Important** : Ces deux scripts sont complémentaires !
+- `db:check-integrity` → Supprime les enregistrements DB sans fichiers
+- `db:clean-orphaned-files` → Supprime les fichiers sans enregistrement DB
+
+### 3. Nettoyer les images de test
 
 ```bash
 npm run db:clean-images
@@ -41,7 +54,7 @@ npm run db:clean-images
 
 Supprime les images avec des alt/descriptions de test comme "esfhgsdgh", "test", "azerty".
 
-### 3. Supprimer TOUTES les images
+### 4. Supprimer TOUTES les images
 
 ```bash
 npm run db:reset-images
@@ -181,8 +194,14 @@ Si vous voulez des images différentes entre local et production :
 ## 🎯 Commandes rapides
 
 ```bash
-# Vérifier et nettoyer les images orphelines
+# Nettoyage complet (recommandé après chaque déploiement)
+npm run db:check-integrity && npm run db:clean-orphaned-files
+
+# Vérifier DB → Fichiers (supprime les enregistrements sans fichiers)
 npm run db:check-integrity
+
+# Vérifier Fichiers → DB (supprime les fichiers sans enregistrements)
+npm run db:clean-orphaned-files
 
 # Nettoyer les images de test
 npm run db:clean-images
