@@ -14,7 +14,8 @@
     "db:clean-images": "tsx scripts/clean-test-images.ts",
     "db:reset-images": "tsx scripts/reset-all-images.ts",
     "db:check-integrity": "tsx scripts/check-image-integrity.ts",
-    "db:clean-orphaned-files": "tsx scripts/clean-orphaned-files.ts"
+    "db:clean-orphaned-files": "tsx scripts/clean-orphaned-files.ts",
+    "db:inspect-images": "tsx scripts/inspect-images.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
