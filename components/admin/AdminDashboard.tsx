@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Booking, SessionType, WeeklyAvailability, BlockedDate, SiteImage, EmailLog, GalleryImage } from '@prisma/client'
+import { Booking, SessionType, WeeklyAvailability, BlockedDate, SiteImage, EmailLog, GalleryImage } from '@/lib/types'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import { logoutAdmin, cancelBooking, deleteBooking, createBlockedDate, deleteBlockedDate, updateBookingStatus } from '@/app/actions/admin'
@@ -56,6 +56,15 @@ export default function AdminDashboard({
     newStatus: string
   } | null>(null)
   const [internalNotes, setInternalNotes] = useState('')
+
+  // Helpers pour obtenir l'ID MongoDB
+  const getBookingId = (booking: Booking): string => {
+    return booking.id || booking._id?.toString() || ''
+  }
+
+  const getBlockedId = (blocked: BlockedDate): string => {
+    return blocked.id || blocked._id?.toString() || ''
+  }
 
   // Restaurer l'onglet actif depuis l'URL hash au chargement
   useEffect(() => {
@@ -317,7 +326,7 @@ export default function AdminDashboard({
                         const statusInfo = BOOKING_STATUSES.find(s => s.value === booking.status) || BOOKING_STATUSES[0]
                         return (
                         <div
-                          key={booking.id}
+                          key={getBookingId(booking)}
                           className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
                         >
                           <div className="flex justify-between items-start">
@@ -326,7 +335,7 @@ export default function AdminDashboard({
                                 <h3 className="font-semibold text-lg">{booking.clientName}</h3>
                                 <select
                                   value={booking.status}
-                                  onChange={(e) => handleStatusChange(booking.id, e.target.value)}
+                                  onChange={(e) => handleStatusChange(getBookingId(booking) || booking._id?.toString() || '', e.target.value)}
                                   className={`text-sm px-3 py-1 rounded font-medium ${statusInfo.color}`}
                                 >
                                   {BOOKING_STATUSES.map(status => (
@@ -368,7 +377,7 @@ export default function AdminDashboard({
                               )}
                             </div>
                             <button
-                              onClick={() => handleCancelBooking(booking.id)}
+                              onClick={() => handleCancelBooking(getBookingId(booking))}
                               className="ml-4 px-4 py-2 text-sm bg-red-50 text-red-600 rounded hover:bg-red-100 transition-colors"
                             >
                               Annuler
@@ -391,7 +400,7 @@ export default function AdminDashboard({
                     <div className="space-y-4">
                       {pastBookings.slice(0, 10).map((booking) => (
                         <div
-                          key={booking.id}
+                          key={getBookingId(booking)}
                           className="border border-gray-200 rounded-lg p-4 bg-gray-50"
                         >
                           <div className="flex justify-between items-start">
@@ -404,7 +413,7 @@ export default function AdminDashboard({
                               </div>
                             </div>
                             <button
-                              onClick={() => handleDeleteBooking(booking.id)}
+                              onClick={() => handleDeleteBooking(getBookingId(booking))}
                               className="text-sm text-gray-400 hover:text-red-600"
                             >
                               Supprimer
@@ -425,7 +434,7 @@ export default function AdminDashboard({
                     <div className="space-y-4">
                       {cancelledBookings.slice(0, 5).map((booking) => (
                         <div
-                          key={booking.id}
+                          key={getBookingId(booking)}
                           className="border border-red-200 rounded-lg p-4 bg-red-50"
                         >
                           <div className="flex justify-between items-start">
@@ -438,7 +447,7 @@ export default function AdminDashboard({
                               </div>
                             </div>
                             <button
-                              onClick={() => handleDeleteBooking(booking.id)}
+                              onClick={() => handleDeleteBooking(getBookingId(booking))}
                               className="text-sm text-gray-400 hover:text-red-600"
                             >
                               Supprimer
@@ -517,7 +526,7 @@ export default function AdminDashboard({
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {blockedDates.map((blocked) => (
                         <div
-                          key={blocked.id}
+                          key={getBlockedId(blocked)}
                           className="border border-gray-200 rounded-lg p-4 flex justify-between items-center"
                         >
                           <div>
@@ -529,7 +538,7 @@ export default function AdminDashboard({
                             )}
                           </div>
                           <button
-                            onClick={() => handleDeleteBlockedDate(blocked.id)}
+                            onClick={() => handleDeleteBlockedDate(getBlockedId(blocked))}
                             className="text-red-600 hover:text-red-700"
                           >
                             Supprimer

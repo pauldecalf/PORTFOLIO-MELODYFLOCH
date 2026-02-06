@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import ImageQualityDisclaimer from '@/components/ImageQualityDisclaimer'
-import { getImageUrl } from '@/lib/images'
+import { getImageUrl } from '@/lib/image-url'
 
 interface GalleryImage {
   id: string

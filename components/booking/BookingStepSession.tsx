@@ -1,4 +1,4 @@
-import { SessionType } from '@prisma/client'
+import { SessionType } from '@/lib/types'
 
 interface BookingStepSessionProps {
   sessionTypes: SessionType[]

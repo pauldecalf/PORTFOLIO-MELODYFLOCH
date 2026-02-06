@@ -1,4 +1,4 @@
-import { MongoClient, Db, Collection } from 'mongodb'
+import { MongoClient, Db, Collection, Document } from 'mongodb'
 
 if (!process.env.DATABASE_URL) {
   throw new Error('DATABASE_URL manquante')
@@ -30,7 +30,7 @@ export async function getDb(): Promise<Db> {
   return client.db('portfolio')
 }
 
-export async function getCollection<T = any>(name: string): Promise<Collection<T>> {
+export async function getCollection<T extends Document = any>(name: string): Promise<Collection<T>> {
   const db = await getDb()
   return db.collection<T>(name)
 }

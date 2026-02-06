@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { SessionType } from '@prisma/client'
+import { SessionType } from '@/lib/types'
 import BookingStepSession from './booking/BookingStepSession'
 import BookingStepDate from './booking/BookingStepDate'
 import BookingStepTime from './booking/BookingStepTime'

@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import PageHero from '@/components/PageHero'
 import BookingWizard from '@/components/BookingWizard'
 import { prisma } from '@/lib/prisma'
-import { SessionType } from '@prisma/client'
+import { SessionType } from '@/lib/types'
 
 export const metadata: Metadata = {
   title: 'Réserver une séance',

@@ -9,7 +9,8 @@ export const prisma = {
       const query = options?.where || {}
       let cursor = col.find(query)
       if (options?.orderBy) cursor = cursor.sort(options.orderBy)
-      return cursor.toArray()
+      const results = await cursor.toArray()
+      return results.map((doc: any) => ({ ...doc, id: doc._id.toString() }))
     },
     findUnique: async (options: any) => {
       const col = await getCollection('bookings')
@@ -36,27 +37,57 @@ export const prisma = {
   sessionType: {
     findMany: async (options?: any) => {
       const col = await getCollection('sessionTypes')
-      return col.find(options?.where || {}).toArray()
+      let cursor = col.find(options?.where || {})
+      if (options?.orderBy) cursor = cursor.sort(options.orderBy)
+      const results = await cursor.toArray()
+      return results.map((doc: any) => ({ ...doc, id: doc._id.toString() }))
     },
     findUnique: async (options: any) => {
       const col = await getCollection('sessionTypes')
       return col.findOne({ _id: new ObjectId(options.where.id) })
     },
+    count: async (options?: any) => {
+      const col = await getCollection('sessionTypes')
+      return col.countDocuments(options?.where || {})
+    },
+    upsert: async (options: any) => {
+      const col = await getCollection('sessionTypes')
+      const existing = await col.findOne(options.where)
+      if (existing) {
+        const data = { ...options.update, updatedAt: new Date() }
+        await col.updateOne(options.where, { $set: data })
+        return { ...existing, ...data }
+      } else {
+        const doc = { ...options.create, createdAt: new Date(), updatedAt: new Date(), isActive: true }
+        const result = await col.insertOne(doc)
+        return { ...doc, id: result.insertedId.toString() }
+      }
+    },
   },
   weeklyAvailability: {
     findMany: async (options?: any) => {
       const col = await getCollection('weeklyAvailabilities')
-      return col.find(options?.where || {}).toArray()
+      const results = await col.find(options?.where || {}).toArray()
+      return results.map((doc: any) => ({ ...doc, id: doc._id.toString() }))
     },
     findFirst: async (options?: any) => {
       const col = await getCollection('weeklyAvailabilities')
       return col.findOne(options?.where || {})
     },
+    create: async (options: any) => {
+      const col = await getCollection('weeklyAvailabilities')
+      const doc = { ...options.data, createdAt: new Date(), updatedAt: new Date(), isActive: true }
+      const result = await col.insertOne(doc)
+      return { ...doc, id: result.insertedId.toString() }
+    },
   },
   blockedDate: {
-    findMany: async () => {
+    findMany: async (options?: any) => {
       const col = await getCollection('blockedDates')
-      return col.find({}).toArray()
+      let cursor = col.find(options?.where || {})
+      if (options?.orderBy) cursor = cursor.sort(options.orderBy)
+      const results = await cursor.toArray()
+      return results.map((doc: any) => ({ ...doc, id: doc._id.toString() }))
     },
     findFirst: async (options?: any) => {
       const col = await getCollection('blockedDates')
@@ -77,7 +108,10 @@ export const prisma = {
   siteImage: {
     findMany: async (options?: any) => {
       const col = await getCollection('siteImages')
-      return col.find(options?.where || {}).toArray()
+      let cursor = col.find(options?.where || {})
+      if (options?.orderBy) cursor = cursor.sort(options.orderBy)
+      const results = await cursor.toArray()
+      return results.map((doc: any) => ({ ...doc, id: doc._id.toString() }))
     },
     findFirst: async (options?: any) => {
       const col = await getCollection('siteImages')
@@ -99,6 +133,19 @@ export const prisma = {
       await col.updateOne({ _id: new ObjectId(options.where.id) }, { $set: data })
       return data
     },
+    upsert: async (options: any) => {
+      const col = await getCollection('siteImages')
+      const existing = await col.findOne(options.where)
+      if (existing) {
+        const data = { ...options.update, updatedAt: new Date() }
+        await col.updateOne(options.where, { $set: data })
+        return { ...existing, ...data }
+      } else {
+        const doc = { ...options.create, createdAt: new Date(), updatedAt: new Date() }
+        const result = await col.insertOne(doc)
+        return { ...doc, id: result.insertedId.toString() }
+      }
+    },
     delete: async (options: any) => {
       const col = await getCollection('siteImages')
       await col.deleteOne({ _id: new ObjectId(options.where.id) })
@@ -108,7 +155,14 @@ export const prisma = {
   galleryImage: {
     findMany: async (options?: any) => {
       const col = await getCollection('galleryImages')
-      return col.find(options?.where || {}).toArray()
+      let cursor = col.find(options?.where || {})
+      if (options?.orderBy) cursor = cursor.sort(options.orderBy)
+      const results = await cursor.toArray()
+      return results.map((doc: any) => ({ ...doc, id: doc._id.toString() }))
+    },
+    findUnique: async (options: any) => {
+      const col = await getCollection('galleryImages')
+      return col.findOne({ _id: new ObjectId(options.where.id) })
     },
     count: async (options?: any) => {
       const col = await getCollection('galleryImages')
@@ -126,6 +180,19 @@ export const prisma = {
       await col.updateOne({ _id: new ObjectId(options.where.id) }, { $set: data })
       return data
     },
+    upsert: async (options: any) => {
+      const col = await getCollection('galleryImages')
+      const existing = await col.findOne(options.where)
+      if (existing) {
+        const data = { ...options.update, updatedAt: new Date() }
+        await col.updateOne(options.where, { $set: data })
+        return { ...existing, ...data }
+      } else {
+        const doc = { ...options.create, createdAt: new Date(), updatedAt: new Date() }
+        const result = await col.insertOne(doc)
+        return { ...doc, id: result.insertedId.toString() }
+      }
+    },
     delete: async (options: any) => {
       const col = await getCollection('galleryImages')
       await col.deleteOne({ _id: new ObjectId(options.where.id) })
@@ -135,7 +202,10 @@ export const prisma = {
   emailLog: {
     findMany: async (options?: any) => {
       const col = await getCollection('emailLogs')
-      return col.find(options?.where || {}).toArray()
+      let cursor = col.find(options?.where || {})
+      if (options?.orderBy) cursor = cursor.sort(options.orderBy)
+      const results = await cursor.toArray()
+      return results.map((doc: any) => ({ ...doc, id: doc._id.toString() }))
     },
     create: async (options: any) => {
       const col = await getCollection('emailLogs')

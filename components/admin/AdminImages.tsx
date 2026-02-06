@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { SiteImage } from '@prisma/client'
+import { SiteImage } from '@/lib/types'
 import { uploadSiteImage, deleteSiteImage, toggleSiteImageStatus } from '@/app/actions/admin'
 import Image from 'next/image'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'

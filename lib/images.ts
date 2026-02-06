@@ -1,24 +1,8 @@
 import { prisma } from './prisma'
+import { getImageUrl } from './image-url'
 
-/**
- * Convertit une URL d'image pour utiliser l'API route
- * SIMPLIFIÉ: Toujours utiliser /api/uploads/ en dev ET prod
- */
-export function getImageUrl(url: string): string {
-  // Si l'URL commence déjà par /api/uploads, la retourner telle quelle
-  if (url.startsWith('/api/uploads/')) {
-    return url
-  }
-  
-  // Si l'URL commence par /uploads/, la convertir en /api/uploads/
-  if (url.startsWith('/uploads/')) {
-    const filename = url.replace('/uploads/', '')
-    return `/api/uploads/${filename}`
-  }
-  
-  // Sinon, retourner l'URL telle quelle (peut être une URL externe)
-  return url
-}
+// Ré-exporter pour compatibilité
+export { getImageUrl }
 
 export async function getImageByKey(key: string) {
   try {

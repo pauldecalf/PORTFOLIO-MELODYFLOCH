@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { prisma } from '../lib/prisma'
 
 async function seedIfEmpty() {
   try {
@@ -65,17 +63,20 @@ async function seedIfEmpty() {
     ]
 
     for (const availability of availabilities) {
-      await prisma.weeklyAvailability.upsert({
+      // Pour MongoDB, on vérifie manuellement si ça existe
+      const existing = await prisma.weeklyAvailability.findFirst({
         where: {
-          dayOfWeek_startTime_endTime: {
-            dayOfWeek: availability.dayOfWeek,
-            startTime: availability.startTime,
-            endTime: availability.endTime,
-          },
+          dayOfWeek: availability.dayOfWeek,
+          startTime: availability.startTime,
+          endTime: availability.endTime,
         },
-        update: availability,
-        create: availability,
       })
+      
+      if (!existing) {
+        await prisma.weeklyAvailability.create({
+          data: availability,
+        })
+      }
     }
 
     console.log('✅ Disponibilités hebdomadaires créées')

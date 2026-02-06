@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { EmailLog, Booking } from '@prisma/client'
+import { EmailLog, Booking } from '@/lib/types'
 import { sendAdminEmail } from '@/app/actions/admin'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
