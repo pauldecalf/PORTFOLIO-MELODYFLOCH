@@ -1,8 +1,8 @@
 import { prisma } from './prisma'
 
 /**
- * Convertit une URL d'image pour utiliser l'API route en production
- * Cette fonction peut être utilisée côté serveur et client
+ * Convertit une URL d'image pour utiliser l'API route
+ * SIMPLIFIÉ: Toujours utiliser /api/uploads/ en dev ET prod
  */
 export function getImageUrl(url: string): string {
   // Si l'URL commence déjà par /api/uploads, la retourner telle quelle
@@ -10,23 +10,10 @@ export function getImageUrl(url: string): string {
     return url
   }
   
-  // Si l'URL commence par /uploads/, la convertir en /api/uploads/ en production
+  // Si l'URL commence par /uploads/, la convertir en /api/uploads/
   if (url.startsWith('/uploads/')) {
     const filename = url.replace('/uploads/', '')
-    // En production, toujours utiliser l'API route pour servir les images
-    // Cela permet de servir les images même si elles sont sur un volume persistant
-    if (typeof window === 'undefined') {
-      // Côté serveur
-      return process.env.NODE_ENV === 'production' 
-        ? `/api/uploads/${filename}`
-        : url
-    } else {
-      // Côté client - détecter si on est en production via l'URL
-      const isProduction = window.location.hostname !== 'localhost' && !window.location.hostname.includes('127.0.0.1')
-      return isProduction 
-        ? `/api/uploads/${filename}`
-        : url
-    }
+    return `/api/uploads/${filename}`
   }
   
   // Sinon, retourner l'URL telle quelle (peut être une URL externe)

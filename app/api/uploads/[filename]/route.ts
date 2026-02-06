@@ -8,18 +8,35 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { filename: string } }
 ) {
+  const requestedFilename = params.filename
+  
   try {
     // Chemin vers le fichier
     const UPLOAD_DIR = process.env.UPLOAD_DIR 
       ? process.env.UPLOAD_DIR 
       : path.join(process.cwd(), 'public', 'uploads')
     
-    const filepath = path.join(UPLOAD_DIR, params.filename)
+    const filepath = path.join(UPLOAD_DIR, requestedFilename)
+
+    console.log(`[IMAGE] Demande: ${requestedFilename}`)
+    console.log(`[IMAGE] Cherche dans: ${UPLOAD_DIR}`)
+    console.log(`[IMAGE] Chemin complet: ${filepath}`)
 
     // Vérifier que le fichier existe
     try {
       await fs.access(filepath)
-    } catch {
+      console.log(`[IMAGE] ✅ Fichier trouvé`)
+    } catch (error) {
+      console.error(`[IMAGE] ❌ Fichier introuvable: ${filepath}`)
+      
+      // Lister les fichiers disponibles pour debug
+      try {
+        const files = await fs.readdir(UPLOAD_DIR)
+        console.log(`[IMAGE] Fichiers disponibles (${files.length}):`, files.slice(0, 10))
+      } catch (e) {
+        console.error(`[IMAGE] Impossible de lire le dossier uploads:`, e)
+      }
+      
       return new NextResponse('Image not found', { status: 404 })
     }
 
@@ -27,7 +44,7 @@ export async function GET(
     const fileBuffer = await fs.readFile(filepath)
     
     // Déterminer le type MIME
-    const ext = path.extname(params.filename).toLowerCase()
+    const ext = path.extname(requestedFilename).toLowerCase()
     const mimeTypes: Record<string, string> = {
       '.jpg': 'image/jpeg',
       '.jpeg': 'image/jpeg',
@@ -37,6 +54,8 @@ export async function GET(
     }
     const contentType = mimeTypes[ext] || 'application/octet-stream'
 
+    console.log(`[IMAGE] ✅ Servie avec succès (${(fileBuffer.length / 1024).toFixed(2)} KB)`)
+
     // Retourner l'image avec les bons headers
     return new NextResponse(fileBuffer, {
       headers: {
@@ -45,7 +64,7 @@ export async function GET(
       },
     })
   } catch (error) {
-    console.error('Error serving image:', error)
+    console.error(`[IMAGE] ❌ Erreur serveur pour ${requestedFilename}:`, error)
     return new NextResponse('Internal Server Error', { status: 500 })
   }
 }

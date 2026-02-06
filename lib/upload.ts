@@ -2,8 +2,20 @@ import fs from 'fs/promises'
 import path from 'path'
 import { randomUUID } from 'crypto'
 
-// En production sur Railway, utiliser un volume persistant si disponible
-// Sinon utiliser le dossier public/uploads (qui sera perdu à chaque redéploiement)
+/**
+ * STOCKAGE 100% LOCAL SUR LE SYSTÈME DE FICHIERS
+ * 
+ * IMPORTANT POUR LA PRODUCTION:
+ * Configurez la variable d'environnement UPLOAD_DIR pour pointer vers un volume persistant
+ * 
+ * Exemples selon votre hébergeur:
+ * - Railway: UPLOAD_DIR="/app/data/uploads" (avec volume monté sur /app/data)
+ * - VPS/Serveur dédié: UPLOAD_DIR="/var/www/uploads"
+ * - Docker: UPLOAD_DIR="/uploads" (avec volume Docker)
+ * 
+ * Si UPLOAD_DIR n'est pas défini, utilise public/uploads (OK en dev, PERDU en prod cloud)
+ */
+
 const UPLOAD_DIR = process.env.UPLOAD_DIR 
   ? process.env.UPLOAD_DIR 
   : path.join(process.cwd(), 'public', 'uploads')
@@ -35,11 +47,14 @@ export async function saveUploadedImage(
   // Sauvegarder l'image dans son format d'origine sans compression ni redimensionnement
   await fs.writeFile(filepath, buffer)
 
-  // En production, utiliser l'API route pour servir les images
-  // Cela permet de servir les images même si elles sont sur un volume persistant
-  const url = process.env.NODE_ENV === 'production' 
-    ? `/api/uploads/${filename}`
-    : `/uploads/${filename}`
+  console.log(`[UPLOAD] ✅ Image sauvegardée: ${filename}`)
+  console.log(`[UPLOAD] Chemin: ${filepath}`)
+
+  // Toujours utiliser l'API route pour servir les images
+  // Cela permet de servir les images même depuis un volume externe
+  const url = `/api/uploads/${filename}`
+
+  console.log(`[UPLOAD] URL générée: ${url}`)
 
   return {
     filename,
